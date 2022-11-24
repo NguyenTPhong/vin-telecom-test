@@ -1,0 +1,125 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/mobile/{user_name}/billing": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mobile"
+                ],
+                "summary": "get user mobile bill",
+                "operationId": "user-bill",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "username",
+                        "name": "user_name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.BillingData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/mobile/{user_name}/call": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mobile"
+                ],
+                "summary": "track user call duration",
+                "operationId": "user-call",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "username",
+                        "name": "user_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "call information",
+                        "name": "json",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.CallRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.BillingData": {
+            "type": "object",
+            "properties": {
+                "block_count": {
+                    "type": "integer"
+                },
+                "call_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.CallRequest": {
+            "type": "object",
+            "required": [
+                "duration"
+            ],
+            "properties": {
+                "duration": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

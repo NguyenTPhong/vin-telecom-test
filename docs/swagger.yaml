@@ -1,0 +1,80 @@
+definitions:
+  model.BillingData:
+    properties:
+      block_count:
+        type: integer
+      call_count:
+        type: integer
+    type: object
+  model.CallRequest:
+    properties:
+      duration:
+        type: integer
+    required:
+    - duration
+    type: object
+  model.ErrorResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /mobile/{user_name}/billing:
+    get:
+      consumes:
+      - application/json
+      operationId: user-bill
+      parameters:
+      - description: username
+        in: path
+        name: user_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BillingData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: get user mobile bill
+      tags:
+      - mobile
+  /mobile/{user_name}/call:
+    post:
+      consumes:
+      - application/json
+      operationId: user-call
+      parameters:
+      - description: username
+        in: path
+        name: user_name
+        required: true
+        type: string
+      - description: call information
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/model.CallRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: track user call duration
+      tags:
+      - mobile
+swagger: "2.0"
